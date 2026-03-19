@@ -3,6 +3,10 @@
 
 class BankingSystem {
 
+    public:
+        BankingSystem();
+
+        void start();
 };
 
 #endif

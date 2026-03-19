@@ -7,3 +7,6 @@ BankingSystem::
 BankingSystem() {
     // Nothing to do yet
 }
+
+void BankingSystem::
+start() {}
