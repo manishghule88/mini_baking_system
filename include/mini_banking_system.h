@@ -7,6 +7,14 @@ class BankingSystem {
         BankingSystem();
 
         void start();
+
+    private:
+        int mAcceptInput = 0;
+        int mInitialAmount = 0;
+        std::string mName;
+
+        void showMenu();
+        void createAccout();
 };
 
 #endif
