@@ -136,7 +136,8 @@ findAccountInFile( double aExistAccountNumber ) {
 void BankingSystem::
 depositMoney() {
     double existAccountNumber = 0.0f;
-    int depositAmout = 0;
+    int depositAmount = 0;
+    int totalAmount = 0;
     bool foundAccount = false;
 
     std::cout << "Enter Account Number:" << std::endl;
@@ -152,9 +153,10 @@ depositMoney() {
     }
     
     std::cout << "Please enter the amout that you want to deposit" << std::endl;
-    std::cin >> depositAmout;
+    std::cin >> depositAmount;
 
     std::ifstream inFile( accountsFileName );
+    std::ofstream tempFile( "temp.dat" );
     std::string line;
 
     while ( std::getline( inFile, line )) {
@@ -168,5 +170,19 @@ depositMoney() {
         int accNo = std::stoi( line.substr( 0, pos1 ));
         std::string name = line.substr( pos1 + 1, pos2 - pos1 - 1 );
         int balance = std::stoi( line.substr( pos2 + 1 )); 
+
+        if ( accNo == existAccountNumber ) {
+            totalAmount = balance + depositAmount;
+            std::cout << "Deposit Successfully!" << std::endl;
+            std::cout << "Updated Balance: " << totalAmount << std::endl;
+        }
+
+        tempFile << accNo << "|" << name << "|" << totalAmount << std::endl;
     }
+
+    inFile.close();
+    tempFile.close();
+
+    remove( "accounts.dat" );
+    rename( "temp.dat", "accounts.dat" );
 }
