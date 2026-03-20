@@ -28,7 +28,8 @@ showMenu() {
         std::cout << "3. Withdraw Money" << std::endl;
         std::cout << "4. View All Accounts" << std::endl;
         std::cout << "5. Close Account" << std::endl;
-        
+        std::cout << "0 Exit Program" << std::endl;
+         
         std::cout << "Actions that you perform as per your need\n";
         std::cin >> mAcceptInput;
     
@@ -42,6 +43,11 @@ showMenu() {
             viewAllAccounts();
         } else if ( mAcceptInput == 5 ) {
             closeAccount();
+        } else if ( mAcceptInput == 0 ) {
+            std::cout << "Exiting Mini Banking System...\n";
+            break;
+        } else {
+            std::cout << "Invalid option\n";
         }
     }
 }
