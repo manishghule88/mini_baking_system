@@ -70,7 +70,6 @@ createAccout() {
 
     if ( mInitialAmount >= 1000 ) {
         
-        std::ofstream mFile;
         mFile.open( accountsFileName, std::ios::app );
 
         if ( !mFile.is_open()) {
@@ -78,7 +77,7 @@ createAccout() {
             return;
         }
 
-        mFile <<"|" << accountNumber << "|" << mName << "|" 
+        mFile << accountNumber << "|" << mName << "|" 
                 << mInitialAmount << std::endl;
 
         mFile.close();
@@ -89,10 +88,58 @@ createAccout() {
     }
 }
 
+bool BankingSystem::
+findAccountInFile( double aExistAccountNumber ) {
+        std::ifstream file( "accounts.dat" );
+
+    if ( !file.is_open() ) {
+        std::cout << "Error opening file\n";
+        return false;
+    }
+
+    std::string line;
+
+    while ( std::getline( file, line ) ) {
+        
+        // skip empty line
+        if ( line.empty()) {
+            continue;
+        }
+        
+        // check if '|' exists
+        size_t pos = line.find( "|" );
+        if ( pos == std::string::npos ) {
+            continue;
+        }
+
+        // extract account number part
+        std::string accStr = line.substr( 0, pos );
+
+        try {
+            // convert safely
+            int fileAccNo = std::stoi( accStr );
+
+            // compare
+            if ( fileAccNo == aExistAccountNumber ) {
+                file.close();
+                return true;
+            }
+        } catch ( ... ) {
+            continue;
+        }
+    }
+
+    file.close();
+    return false;
+}
+
 void BankingSystem::
 depositMoney() {
     double existAccountNumber = 0.0f;
+    bool foundAccount = false;
 
     std::cout << "Enter Account Number:" << std::endl;
     std::cin >> existAccountNumber;
+
+    foundAccount = findAccountInFile( existAccountNumber );
 }
