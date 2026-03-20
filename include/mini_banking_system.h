@@ -55,10 +55,21 @@ class BankingSystem {
         ///     true if account is found false otherwise
         bool findAccountInFile( double aExistAccountNumber );
 
+        /// Withdraws money from an existing bank account
+        /// Verifies the account number, accept a withdrawal amount, 
+        /// updates the account balance, rewrites the updated data to the file
+        /// usiing a temporary file.
         void withdrawMoney();
 
+        /// Display all accounts stored in the file.
+        /// Reads the accounts file line by line parses account number,
+        /// name, and balance and prints them to the console.
         void viewAllAccounts();
 
+        /// Closes and existing bank account.
+        /// Function verifies the account number removes the corresponding
+        /// account entry from the file and rewrities the remaining data
+        /// using a temporary file.
         void closeAccount();
 };
 
