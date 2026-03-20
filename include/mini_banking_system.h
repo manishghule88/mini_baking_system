@@ -56,6 +56,8 @@ class BankingSystem {
         bool findAccountInFile( double aExistAccountNumber );
 
         void withdrawMoney();
+
+        void viewAllAccounts();
 };
 
 #endif
