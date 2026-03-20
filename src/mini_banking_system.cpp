@@ -21,19 +21,28 @@ start() {
 void BankingSystem::
 showMenu() {
     
-    std::cout << "Actions that you perform as per your need\n";
-    std::cin >> mAcceptInput;
+    while ( true ) {
 
-    if ( mAcceptInput == 1 ) {
-        createAccout();
-    } else if ( mAcceptInput == 2 ) {
-        depositMoney();
-    } else if ( mAcceptInput == 3 ) {
-        withdrawMoney();
-    } else if ( mAcceptInput == 4 ) {
-        viewAllAccounts();
-    } else if ( mAcceptInput == 5 ) {
-        closeAccount();
+        std::cout << "1. Create Account" << std::endl;
+        std::cout << "2. Deposit Money" << std::endl;
+        std::cout << "3. Withdraw Money" << std::endl;
+        std::cout << "4. View All Accounts" << std::endl;
+        std::cout << "5. Close Account" << std::endl;
+        
+        std::cout << "Actions that you perform as per your need\n";
+        std::cin >> mAcceptInput;
+    
+        if ( mAcceptInput == 1 ) {
+            createAccout();
+        } else if ( mAcceptInput == 2 ) {
+            depositMoney();
+        } else if ( mAcceptInput == 3 ) {
+            withdrawMoney();
+        } else if ( mAcceptInput == 4 ) {
+            viewAllAccounts();
+        } else if ( mAcceptInput == 5 ) {
+            closeAccount();
+        }
     }
 }
 
@@ -75,9 +84,10 @@ createAccout() {
 
     std::cout << "To Create Accout You Need to pay minimum 1000 Rs\n";
     std::cin >> mInitialAmount;
+    std::cout << "\n";
 
     double accountNumber = uniqueNumberGeneration();
-    std::cout << "Account numer" << accountNumber << std::endl;
+    std::cout << "Account number : " << accountNumber << std::endl;
     if ( mInitialAmount >= 1000 ) {
         
         mFile.open( accountsFileName, std::ios::app );
@@ -92,7 +102,8 @@ createAccout() {
 
         mFile.close();
         std::cout << "Your Account Successfully Created\n";
-        std::cout << "Account Number: " << accountNumber;
+        std::cout << "Account Number: " << accountNumber << "\n";
+        std::cout << "\n------------------------------------------\n";
     } else {
         std::cout << "Please Deposit Sufficient amount to create account\n";
     }
@@ -152,6 +163,7 @@ depositMoney() {
 
     mFoundAccount = findAccountInFile( mExistAccountNumber );
     
+    std::cout << "\n------------------------------------------\n";
     if ( mFoundAccount ) {
         std::cout << "Account Found!" << std::endl;
     } else {
@@ -182,6 +194,7 @@ depositMoney() {
             mTotalAmount = balance + depositAmount;
             std::cout << "Deposit Successfully!" << std::endl;
             std::cout << "Updated Balance: " << mTotalAmount << std::endl;
+            std::cout << "\n------------------------------------------\n";
         }
 
         tempFile << accNo << "|" << name << "|" << mTotalAmount << std::endl;
@@ -203,6 +216,7 @@ withdrawMoney() {
 
     mFoundAccount = findAccountInFile( mExistAccountNumber );
     
+    std::cout << "\n------------------------------------------\n";
     if ( mFoundAccount ) {
         std::cout << "Account Found!" << std::endl;
     } else {
@@ -231,8 +245,9 @@ withdrawMoney() {
 
         if ( accNo == mExistAccountNumber ) {
             mTotalAmount = balance - withdrawAmount;
-            std::cout << "Deposit Successfully!" << std::endl;
+            std::cout << "Withdraw Money Successfully!" << std::endl;
             std::cout << "Updated Balance: " << mTotalAmount << std::endl;
+            std::cout << "\n------------------------------------------\n";
         }
 
         tempFile << accNo << "|" << name << "|" << mTotalAmount << std::endl;
@@ -267,6 +282,7 @@ viewAllAccounts() {
         std::cout << "Account No: " << accNo
                   << " | Name: " << name
                   << " | Balance: " << bal << std::endl;
+        std::cout << "\n------------------------------------------\n";
     }
 
     inFile.close();
@@ -282,6 +298,7 @@ closeAccount() {
 
     mFoundAccount = findAccountInFile( mExistAccountNumber );
     
+    std::cout << "\n------------------------------------------\n";
     if ( mFoundAccount ) {
         std::cout << "Account Found!" << std::endl;
     } else {
@@ -311,6 +328,7 @@ closeAccount() {
         if ( accNo == mExistAccountNumber ) {
             found = true;
             std::cout << "Account Closed Successfully" << std::endl;
+            std::cout << "\n------------------------------------------\n";
             continue;
         }
 
