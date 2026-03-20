@@ -12,6 +12,7 @@ class BankingSystem {
         int mAcceptInput = 0;
         int mInitialAmount = 0;
         std::string mName;
+        std::string accountsFileName = "accounts.dat";
 
         void showMenu();
         void createAccout();
