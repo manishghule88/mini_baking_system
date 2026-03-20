@@ -13,6 +13,8 @@ class BankingSystem {
     private:
         int mAcceptInput = 0;
         int mInitialAmount = 0;
+        double mExistAccountNumber = 0.0f;
+        bool mFoundAccount = false;
         std::string mName;
         std::ofstream mFile;
         std::string accountsFileName = "accounts.dat";
@@ -51,6 +53,8 @@ class BankingSystem {
         /// @return true
         ///     true if account is found false otherwise
         bool findAccountInFile( double aExistAccountNumber );
+
+        void withdrawMoney();
 };
 
 #endif
