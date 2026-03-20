@@ -81,6 +81,7 @@ createAccout() {
 
         mFile.close();
         std::cout << "Your Account Successfully Created\n";
+        std::cout << "Account Number: " << accountNumber;
     } else {
         std::cout << "Please Deposit Sufficient amount to create account\n";
     }
