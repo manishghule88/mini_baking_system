@@ -136,10 +136,37 @@ findAccountInFile( double aExistAccountNumber ) {
 void BankingSystem::
 depositMoney() {
     double existAccountNumber = 0.0f;
+    int depositAmout = 0;
     bool foundAccount = false;
 
     std::cout << "Enter Account Number:" << std::endl;
     std::cin >> existAccountNumber;
 
     foundAccount = findAccountInFile( existAccountNumber );
+    
+    if ( foundAccount ) {
+        std::cout << "Account Found!" << std::endl;
+    } else {
+        std::cout << "Account not Found!" << std::endl;
+        return;
+    }
+    
+    std::cout << "Please enter the amout that you want to deposit" << std::endl;
+    std::cin >> depositAmout;
+
+    std::ifstream inFile( accountsFileName );
+    std::string line;
+
+    while ( std::getline( inFile, line )) {
+        if ( line.empty()) {
+            continue;
+        }
+
+        size_t pos1 = line.find( "|" );
+        size_t pos2 = line.find( "|", pos1 + 1 );
+
+        int accNo = std::stoi( line.substr( 0, pos1 ));
+        std::string name = line.substr( pos1 + 1, pos2 - pos1 - 1 );
+        int balance = std::stoi( line.substr( pos2 + 1 )); 
+    }
 }
