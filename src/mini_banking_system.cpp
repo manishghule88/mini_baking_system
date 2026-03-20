@@ -38,6 +38,18 @@ createAccout() {
     std::cin >> mInitialAmount;
 
     if ( mInitialAmount >= 1000 ) {
+        
+        std::ofstream mFile;
+        mFile.open( accountsFileName, std::ios::app );
+
+        if ( !mFile.is_open()) {
+            std::cout << "Error: in creating file\n";
+            return;
+        }
+
+        mFile <<"|" << mName << "|" << mInitialAmount << std::endl;
+
+        mFile.close();
         std::cout << "Your Account Successfully Created\n";
     } else {
         std::cout << "Please Deposit Sufficient amount to create account\n";
