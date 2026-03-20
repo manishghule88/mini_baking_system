@@ -30,6 +30,8 @@ showMenu() {
         depositMoney();
     } else if ( mAcceptInput == 3 ) {
         withdrawMoney();
+    } else if ( mAcceptInput == 4 ) {
+        viewAllAccounts();
     }
 }
 
@@ -239,4 +241,20 @@ withdrawMoney() {
 
     remove( "accounts.dat" );
     rename( "temp.dat", "accounts.dat" );
+}
+
+void BankingSystem::
+viewAllAccounts() {
+
+    std::ifstream inFile( accountsFileName );
+    std::string line;
+
+    std::cout << "\n-------- All Accounts ---------\n"; 
+    while ( std::getline( inFile, line )) {
+        if ( line.empty()) {
+            continue;
+        }
+
+        std::cout << line << std::endl;
+    }
 }
