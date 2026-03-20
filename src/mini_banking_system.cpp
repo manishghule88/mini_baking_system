@@ -38,19 +38,23 @@ uniqueNumberGeneration() {
     int lastAccount = 100000;
 
     while( getline( file, line )) {
-        size_t first = line.find( '|' );
-        size_t second = line.find( '|', first + 1 );
 
-        if ( first != string::npos && second != string::npos ) {
-            string accStr = line.substr( first + 1, 
-                    second - first - 1 );
+        if ( line.empty()) {
+            continue;
+        }
 
-            if ( !accStr.empty() && all_of( accStr.begin(), 
-                    accStr.end(), ::isdigit )) 
-            {
-                int acc = stoi( accStr );
-                lastAccount = acc;
-            }
+        size_t pos = line.find( '|' );
+        if ( pos == std::string::npos ) {
+            continue;
+        }
+
+        std::string accStr = line.substr( 0, pos );
+
+        try {
+            int acc = std::stoi( accStr );
+            lastAccount = acc;
+        } catch ( ... ) {
+            continue;
         }
     }
     return lastAccount + 1;
@@ -67,7 +71,7 @@ createAccout() {
     std::cin >> mInitialAmount;
 
     double accountNumber = uniqueNumberGeneration();
-
+    std::cout << "Account numer" << accountNumber << std::endl;
     if ( mInitialAmount >= 1000 ) {
         
         mFile.open( accountsFileName, std::ios::app );
