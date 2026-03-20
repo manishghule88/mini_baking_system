@@ -17,6 +17,7 @@ class BankingSystem {
         void showMenu();
         void createAccout();
         double uniqueNumberGeneration();
+        void depositMoney();
 };
 
 #endif

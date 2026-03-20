@@ -26,6 +26,8 @@ showMenu() {
 
     if ( mAcceptInput == 1 ) {
         createAccout();
+    } else if ( mAcceptInput == 2 ) {
+        depositMoney();
     }
 }
 
@@ -85,4 +87,12 @@ createAccout() {
     } else {
         std::cout << "Please Deposit Sufficient amount to create account\n";
     }
+}
+
+void BankingSystem::
+depositMoney() {
+    double existAccountNumber = 0.0f;
+
+    std::cout << "Enter Account Number:" << std::endl;
+    std::cin >> existAccountNumber;
 }
