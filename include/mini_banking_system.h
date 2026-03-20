@@ -11,14 +11,14 @@ class BankingSystem {
         void start();
 
     private:
-        int mAcceptInput = 0;
-        int mInitialAmount = 0;
-        int mTotalAmount = 0;
-        double mExistAccountNumber = 0.0f;
-        bool mFoundAccount = false;
-        std::string mName;
+        int mAcceptInput = 0;           /// To store accepted input from user
+        int mInitialAmount = 0;         /// To store first amount
+        int mTotalAmount = 0;           /// To store total amount in account
+        double mExistAccountNumber = 0.0f; /// To check account number
+        bool mFoundAccount = false;     /// To check the account is present
+        std::string mName;              /// To store user name
         std::ofstream mFile;
-        std::string accountsFileName = "accounts.dat";
+        std::string accountsFileName = "accounts.dat"; /// File name
 
         /// Displays the banking menu and processes user input
         /// The user to select and action and calls corresponding
