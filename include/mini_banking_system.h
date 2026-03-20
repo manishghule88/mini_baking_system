@@ -13,6 +13,7 @@ class BankingSystem {
     private:
         int mAcceptInput = 0;
         int mInitialAmount = 0;
+        int mTotalAmount = 0;
         double mExistAccountNumber = 0.0f;
         bool mFoundAccount = false;
         std::string mName;
