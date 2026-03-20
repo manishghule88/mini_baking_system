@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <random>
 
 #include "mini_banking_system.h"
 
@@ -27,6 +28,16 @@ showMenu() {
     }
 }
 
+double BankingSystem::
+uniqueNumberGeneration() {
+    random_device radDevice;
+    mt19937 get( radDevice());
+
+    uniform_int_distribution<> dist( 0, 999999 );
+
+    return dist( radDevice );
+}
+
 void BankingSystem::
 createAccout() {
     std::cout << "You Select Account Creation : \n";
@@ -36,6 +47,8 @@ createAccout() {
 
     std::cout << "To Create Accout You Need to pay minimum 1000 Rs\n";
     std::cin >> mInitialAmount;
+
+    double accountNumber = uniqueNumberGeneration();
 
     if ( mInitialAmount >= 1000 ) {
         
@@ -47,7 +60,7 @@ createAccout() {
             return;
         }
 
-        mFile <<"|" << mName << "|" << mInitialAmount << std::endl;
+        mFile <<"|" << accountNumber << "|" << mName << "|" << mInitialAmount << std::endl;
 
         mFile.close();
         std::cout << "Your Account Successfully Created\n";
