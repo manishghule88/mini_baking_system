@@ -32,6 +32,8 @@ showMenu() {
         withdrawMoney();
     } else if ( mAcceptInput == 4 ) {
         viewAllAccounts();
+    } else if ( mAcceptInput == 5 ) {
+        closeAccount();
     }
 }
 
@@ -268,4 +270,60 @@ viewAllAccounts() {
     }
 
     inFile.close();
+}
+
+void BankingSystem::
+closeAccount() {
+
+    bool found = false;
+
+    std::cout << "Enter Account Number to close account permentantly :" << std::endl;
+    std::cin >> mExistAccountNumber;
+
+    mFoundAccount = findAccountInFile( mExistAccountNumber );
+    
+    if ( mFoundAccount ) {
+        std::cout << "Account Found!" << std::endl;
+    } else {
+        std::cout << "Account not Found!" << std::endl;
+        return;
+    }
+
+    std::ifstream inFile( accountsFileName );
+    std::ofstream tempFile( "temp.dat" );
+    
+    if ( !inFile.is_open() || !tempFile.is_open()) {
+        std::cout << "Error opening file\n";
+        return;
+    }
+
+    std::string line;
+
+    while ( std::getline( inFile, line )) {
+        if ( line.empty()) {
+            continue;
+        }
+
+        size_t pos1 = line.find( "|" );
+
+        int accNo = std::stoi( line.substr( 0, pos1 ));
+
+        if ( accNo == mExistAccountNumber ) {
+            found = true;
+            std::cout << "Account Closed Successfully" << std::endl;
+            continue;
+        }
+
+        tempFile << line << std::endl;
+    }
+
+    inFile.close();
+    tempFile.close();
+
+    remove( "accounts.dat" );
+    rename( "temp.dat", "accounts.dat" );
+
+    if ( !found ) {
+        std::cout << "Account not found\n";
+    }
 }

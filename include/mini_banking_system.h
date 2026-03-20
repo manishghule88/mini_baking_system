@@ -58,6 +58,8 @@ class BankingSystem {
         void withdrawMoney();
 
         void viewAllAccounts();
+
+        void closeAccount();
 };
 
 #endif
