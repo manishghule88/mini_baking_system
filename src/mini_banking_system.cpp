@@ -139,17 +139,15 @@ findAccountInFile( double aExistAccountNumber ) {
 
 void BankingSystem::
 depositMoney() {
-    double existAccountNumber = 0.0f;
     int depositAmount = 0;
     int totalAmount = 0;
-    bool foundAccount = false;
 
     std::cout << "Enter Account Number:" << std::endl;
-    std::cin >> existAccountNumber;
+    std::cin >> mExistAccountNumber;
 
-    foundAccount = findAccountInFile( existAccountNumber );
+    mFoundAccount = findAccountInFile( mExistAccountNumber );
     
-    if ( foundAccount ) {
+    if ( mFoundAccount ) {
         std::cout << "Account Found!" << std::endl;
     } else {
         std::cout << "Account not Found!" << std::endl;
@@ -175,7 +173,7 @@ depositMoney() {
         std::string name = line.substr( pos1 + 1, pos2 - pos1 - 1 );
         int balance = std::stoi( line.substr( pos2 + 1 )); 
 
-        if ( accNo == existAccountNumber ) {
+        if ( accNo == mExistAccountNumber ) {
             totalAmount = balance + depositAmount;
             std::cout << "Deposit Successfully!" << std::endl;
             std::cout << "Updated Balance: " << totalAmount << std::endl;
@@ -189,4 +187,24 @@ depositMoney() {
 
     remove( "accounts.dat" );
     rename( "temp.dat", "accounts.dat" );
+}
+
+void BankingSystem::
+withdrawMoney() {
+    int withdrawAmount = 0;
+
+    std::cout << "Enter Account Number:" << std::endl;
+    std::cin >> mExistAccountNumber;
+
+    mFoundAccount = findAccountInFile( mExistAccountNumber );
+    
+    if ( mFoundAccount ) {
+        std::cout << "Account Found!" << std::endl;
+    } else {
+        std::cout << "Account not Found!" << std::endl;
+        return;
+    }
+
+    std::cout << "Please enter the amout that you want to withdraw" << std::endl;
+    std::cin >> withdrawAmount;
 }
