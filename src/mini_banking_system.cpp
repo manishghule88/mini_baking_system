@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <random>
+#include <algorithm>
 
 #include "mini_banking_system.h"
 
@@ -30,12 +31,27 @@ showMenu() {
 
 double BankingSystem::
 uniqueNumberGeneration() {
-    random_device radDevice;
-    mt19937 get( radDevice());
+    ifstream file( accountsFileName );
+    string line;
+    int lastAccount = 100000;
 
-    uniform_int_distribution<> dist( 0, 999999 );
+    while( getline( file, line )) {
+        size_t first = line.find( '|' );
+        size_t second = line.find( '|', first + 1 );
 
-    return dist( radDevice );
+        if ( first != string::npos && second != string::npos ) {
+            string accStr = line.substr( first + 1, 
+                    second - first - 1 );
+
+            if ( !accStr.empty() && all_of( accStr.begin(), 
+                    accStr.end(), ::isdigit )) 
+            {
+                int acc = stoi( accStr );
+                lastAccount = acc;
+            }
+        }
+    }
+    return lastAccount + 1;
 }
 
 void BankingSystem::
@@ -60,7 +76,8 @@ createAccout() {
             return;
         }
 
-        mFile <<"|" << accountNumber << "|" << mName << "|" << mInitialAmount << std::endl;
+        mFile <<"|" << accountNumber << "|" << mName << "|" 
+                << mInitialAmount << std::endl;
 
         mFile.close();
         std::cout << "Your Account Successfully Created\n";
