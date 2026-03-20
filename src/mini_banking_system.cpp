@@ -28,6 +28,8 @@ showMenu() {
         createAccout();
     } else if ( mAcceptInput == 2 ) {
         depositMoney();
+    } else if ( mAcceptInput == 3 ) {
+        withdrawMoney();
     }
 }
 
@@ -140,7 +142,6 @@ findAccountInFile( double aExistAccountNumber ) {
 void BankingSystem::
 depositMoney() {
     int depositAmount = 0;
-    int totalAmount = 0;
 
     std::cout << "Enter Account Number:" << std::endl;
     std::cin >> mExistAccountNumber;
@@ -174,12 +175,12 @@ depositMoney() {
         int balance = std::stoi( line.substr( pos2 + 1 )); 
 
         if ( accNo == mExistAccountNumber ) {
-            totalAmount = balance + depositAmount;
+            mTotalAmount = balance + depositAmount;
             std::cout << "Deposit Successfully!" << std::endl;
-            std::cout << "Updated Balance: " << totalAmount << std::endl;
+            std::cout << "Updated Balance: " << mTotalAmount << std::endl;
         }
 
-        tempFile << accNo << "|" << name << "|" << totalAmount << std::endl;
+        tempFile << accNo << "|" << name << "|" << mTotalAmount << std::endl;
     }
 
     inFile.close();
@@ -207,4 +208,35 @@ withdrawMoney() {
 
     std::cout << "Please enter the amout that you want to withdraw" << std::endl;
     std::cin >> withdrawAmount;
+
+    std::ifstream inFile( accountsFileName );
+    std::ofstream tempFile( "temp.dat" );
+    std::string line;
+
+    while ( std::getline( inFile, line )) {
+        if ( line.empty()) {
+            continue;
+        }
+
+        size_t pos1 = line.find( "|" );
+        size_t pos2 = line.find( "|", pos1 + 1 );
+
+        int accNo = std::stoi( line.substr( 0, pos1 ));
+        std::string name = line.substr( pos1 + 1, pos2 - pos1 - 1 );
+        int balance = std::stoi( line.substr( pos2 + 1 )); 
+
+        if ( accNo == mExistAccountNumber ) {
+            mTotalAmount = balance - withdrawAmount;
+            std::cout << "Deposit Successfully!" << std::endl;
+            std::cout << "Updated Balance: " << mTotalAmount << std::endl;
+        }
+
+        tempFile << accNo << "|" << name << "|" << mTotalAmount << std::endl;
+    }    
+
+    inFile.close();
+    tempFile.close();
+
+    remove( "accounts.dat" );
+    rename( "temp.dat", "accounts.dat" );
 }
