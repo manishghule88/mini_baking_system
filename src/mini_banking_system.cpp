@@ -255,6 +255,17 @@ viewAllAccounts() {
             continue;
         }
 
-        std::cout << line << std::endl;
+        size_t pos1 = line.find( "|" );
+        size_t pos2 = line.find( "|", pos1 + 1 );
+
+        std::string accNo = line.substr( 0, pos1 );
+        std::string name  = line.substr( pos1 + 1, pos2 - pos1 - 1 );
+        std::string bal   = line.substr( pos2 + 1 );
+
+        std::cout << "Account No: " << accNo
+                  << " | Name: " << name
+                  << " | Balance: " << bal << std::endl;
     }
+
+    inFile.close();
 }
