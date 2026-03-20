@@ -36,4 +36,10 @@ createAccout() {
 
     std::cout << "To Create Accout You Need to pay minimum 1000 Rs\n";
     std::cin >> mInitialAmount;
+
+    if ( mInitialAmount >= 1000 ) {
+        std::cout << "Your Account Successfully Created\n";
+    } else {
+        std::cout << "Please Deposit Sufficient amount to create account\n";
+    }
 }
